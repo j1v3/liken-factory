@@ -1,5 +1,4 @@
-# .symfony.cloud.yaml
 relationships:
-    database: "mysqldb:admin"
-    reports: "mysqldb:reporter"
-    imports: "mysqldb:importer"
+    database: "factorydb:admin"
+    reports: "factorydb:reporter"
+    imports: "factorydb:importer"
