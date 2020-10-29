@@ -1,0 +1,5 @@
+# .symfony.cloud.yaml
+relationships:
+    database: "mysqldb:admin"
+    reports: "mysqldb:reporter"
+    imports: "mysqldb:importer"
