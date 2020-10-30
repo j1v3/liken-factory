@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SubMenu{% endblock %}
+
+{% block body %}
+    <h1>SubMenu</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sub_menu.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ sub_menu.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ sub_menu.description }}</td>
+            </tr>
+            <tr>
+                <th>Rank</th>
+                <td>{{ sub_menu.rank }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('sub_menu_index') }}">back to list</a>
+
+    <a href="{{ path('sub_menu_edit', {'id': sub_menu.id}) }}">edit</a>
+
+    {{ include('sub_menu/_delete_form.html.twig') }}
+{% endblock %}

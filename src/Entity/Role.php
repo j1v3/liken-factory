@@ -2,16 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Repository\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity(repositoryClass=RoleRepository::class)
  */
-class User implements UserInterface
+class Role
 {
     /**
      * @ORM\Id
@@ -21,68 +20,52 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $email;
+    private $name;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $roles = [];
+    private $description;
 
     /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
-    private $password;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="owner")
+     * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="role")
      */
     private $menus;
 
     /**
-     * @ORM\OneToMany(targetEntity=SubMenu::class, mappedBy="owner")
+     * @ORM\OneToMany(targetEntity=SubMenu::class, mappedBy="role")
      */
     private $subMenus;
 
     /**
-     * @ORM\OneToMany(targetEntity=SubSubMenu::class, mappedBy="owner")
+     * @ORM\OneToMany(targetEntity=SubSubMenu::class, mappedBy="role")
      */
     private $subSubMenus;
 
     /**
-     * @ORM\OneToMany(targetEntity=Content::class, mappedBy="owner")
+     * @ORM\OneToMany(targetEntity=Content::class, mappedBy="role")
      */
     private $contents;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="owner")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="role")
      */
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity=SurveyItem::class, mappedBy="owner")
+     * @ORM\OneToMany(targetEntity=SurveyItem::class, mappedBy="role")
      */
     private $surveyItems;
 
     /**
-     * @ORM\OneToMany(targetEntity=Survey::class, mappedBy="owner")
+     * @ORM\OneToMany(targetEntity=Survey::class, mappedBy="role")
      */
     private $surveys;
 
     /**
-     * @ORM\OneToMany(targetEntity=Survey::class, mappedBy="client")
-     */
-    private $surveysClient;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Estimate::class, mappedBy="client")
-     */
-    private $estimates;
-
-    /**
-     * @ORM\OneToMany(targetEntity=ContentType::class, mappedBy="owner")
+     * @ORM\OneToMany(targetEntity=ContentType::class, mappedBy="Role")
      */
     private $contentTypes;
 
@@ -95,8 +78,6 @@ class User implements UserInterface
         $this->images = new ArrayCollection();
         $this->surveyItems = new ArrayCollection();
         $this->surveys = new ArrayCollection();
-        $this->surveysClient = new ArrayCollection();
-        $this->estimates = new ArrayCollection();
         $this->contentTypes = new ArrayCollection();
     }
 
@@ -105,77 +86,28 @@ class User implements UserInterface
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getName(): ?string
     {
-        return $this->email;
+        return $this->name;
     }
 
-    public function setEmail(string $email): self
+    public function setName(?string $name): self
     {
-        $this->email = $email;
+        $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
+    public function getDescription(): ?string
     {
-        return (string) $this->email;
+        return $this->description;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
+    public function setDescription(?string $description): self
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
+        $this->description = $description;
 
         return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getPassword(): string
-    {
-        return (string) $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getSalt()
-    {
-        // not needed when using the "bcrypt" algorithm in security.yaml
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 
     /**
@@ -190,7 +122,7 @@ class User implements UserInterface
     {
         if (!$this->menus->contains($menu)) {
             $this->menus[] = $menu;
-            $menu->setOwner($this);
+            $menu->setRole($this);
         }
 
         return $this;
@@ -200,8 +132,8 @@ class User implements UserInterface
     {
         if ($this->menus->removeElement($menu)) {
             // set the owning side to null (unless already changed)
-            if ($menu->getOwner() === $this) {
-                $menu->setOwner(null);
+            if ($menu->getRole() === $this) {
+                $menu->setRole(null);
             }
         }
 
@@ -220,7 +152,7 @@ class User implements UserInterface
     {
         if (!$this->subMenus->contains($subMenu)) {
             $this->subMenus[] = $subMenu;
-            $subMenu->setOwner($this);
+            $subMenu->setRole($this);
         }
 
         return $this;
@@ -230,8 +162,8 @@ class User implements UserInterface
     {
         if ($this->subMenus->removeElement($subMenu)) {
             // set the owning side to null (unless already changed)
-            if ($subMenu->getOwner() === $this) {
-                $subMenu->setOwner(null);
+            if ($subMenu->getRole() === $this) {
+                $subMenu->setRole(null);
             }
         }
 
@@ -250,7 +182,7 @@ class User implements UserInterface
     {
         if (!$this->subSubMenus->contains($subSubMenu)) {
             $this->subSubMenus[] = $subSubMenu;
-            $subSubMenu->setOwner($this);
+            $subSubMenu->setRole($this);
         }
 
         return $this;
@@ -260,8 +192,8 @@ class User implements UserInterface
     {
         if ($this->subSubMenus->removeElement($subSubMenu)) {
             // set the owning side to null (unless already changed)
-            if ($subSubMenu->getOwner() === $this) {
-                $subSubMenu->setOwner(null);
+            if ($subSubMenu->getRole() === $this) {
+                $subSubMenu->setRole(null);
             }
         }
 
@@ -280,7 +212,7 @@ class User implements UserInterface
     {
         if (!$this->contents->contains($content)) {
             $this->contents[] = $content;
-            $content->setOwner($this);
+            $content->setRole($this);
         }
 
         return $this;
@@ -290,8 +222,8 @@ class User implements UserInterface
     {
         if ($this->contents->removeElement($content)) {
             // set the owning side to null (unless already changed)
-            if ($content->getOwner() === $this) {
-                $content->setOwner(null);
+            if ($content->getRole() === $this) {
+                $content->setRole(null);
             }
         }
 
@@ -310,7 +242,7 @@ class User implements UserInterface
     {
         if (!$this->images->contains($image)) {
             $this->images[] = $image;
-            $image->setOwner($this);
+            $image->setRole($this);
         }
 
         return $this;
@@ -320,8 +252,8 @@ class User implements UserInterface
     {
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)
-            if ($image->getOwner() === $this) {
-                $image->setOwner(null);
+            if ($image->getRole() === $this) {
+                $image->setRole(null);
             }
         }
 
@@ -340,7 +272,7 @@ class User implements UserInterface
     {
         if (!$this->surveyItems->contains($surveyItem)) {
             $this->surveyItems[] = $surveyItem;
-            $surveyItem->setOwner($this);
+            $surveyItem->setRole($this);
         }
 
         return $this;
@@ -350,8 +282,8 @@ class User implements UserInterface
     {
         if ($this->surveyItems->removeElement($surveyItem)) {
             // set the owning side to null (unless already changed)
-            if ($surveyItem->getOwner() === $this) {
-                $surveyItem->setOwner(null);
+            if ($surveyItem->getRole() === $this) {
+                $surveyItem->setRole(null);
             }
         }
 
@@ -370,7 +302,7 @@ class User implements UserInterface
     {
         if (!$this->surveys->contains($survey)) {
             $this->surveys[] = $survey;
-            $survey->setOwner($this);
+            $survey->setRole($this);
         }
 
         return $this;
@@ -380,68 +312,8 @@ class User implements UserInterface
     {
         if ($this->surveys->removeElement($survey)) {
             // set the owning side to null (unless already changed)
-            if ($survey->getOwner() === $this) {
-                $survey->setOwner(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Survey[]
-     */
-    public function getSurveysClient(): Collection
-    {
-        return $this->surveysClient;
-    }
-
-    public function addSurveysClient(Survey $surveysClient): self
-    {
-        if (!$this->surveysClient->contains($surveysClient)) {
-            $this->surveysClient[] = $surveysClient;
-            $surveysClient->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSurveysClient(Survey $surveysClient): self
-    {
-        if ($this->surveysClient->removeElement($surveysClient)) {
-            // set the owning side to null (unless already changed)
-            if ($surveysClient->getClient() === $this) {
-                $surveysClient->setClient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Estimate[]
-     */
-    public function getEstimates(): Collection
-    {
-        return $this->estimates;
-    }
-
-    public function addEstimate(Estimate $estimate): self
-    {
-        if (!$this->estimates->contains($estimate)) {
-            $this->estimates[] = $estimate;
-            $estimate->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEstimate(Estimate $estimate): self
-    {
-        if ($this->estimates->removeElement($estimate)) {
-            // set the owning side to null (unless already changed)
-            if ($estimate->getClient() === $this) {
-                $estimate->setClient(null);
+            if ($survey->getRole() === $this) {
+                $survey->setRole(null);
             }
         }
 
@@ -460,7 +332,7 @@ class User implements UserInterface
     {
         if (!$this->contentTypes->contains($contentType)) {
             $this->contentTypes[] = $contentType;
-            $contentType->setOwner($this);
+            $contentType->setRole($this);
         }
 
         return $this;
@@ -470,8 +342,8 @@ class User implements UserInterface
     {
         if ($this->contentTypes->removeElement($contentType)) {
             // set the owning side to null (unless already changed)
-            if ($contentType->getOwner() === $this) {
-                $contentType->setOwner(null);
+            if ($contentType->getRole() === $this) {
+                $contentType->setRole(null);
             }
         }
 

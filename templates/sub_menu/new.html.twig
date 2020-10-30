@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SubMenu{% endblock %}
+
+{% block body %}
+    <h1>Create new SubMenu</h1>
+
+    {{ include('sub_menu/_form.html.twig') }}
+
+    <a href="{{ path('sub_menu_index') }}">back to list</a>
+{% endblock %}
