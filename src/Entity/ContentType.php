@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ContentTypeRepository;
+use App\Traits\Stampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ContentType
 {
+    use Stampable;
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
