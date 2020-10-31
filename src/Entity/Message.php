@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MessageRepository;
+use App\Traits\Stampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Message
 {
+    use Stampable;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EstimateRepository;
+use App\Traits\Stampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Estimate
 {
+    use Stampable;
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
