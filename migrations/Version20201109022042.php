@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201031120433 extends AbstractMigration
+final class Version20201109022042 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -33,6 +33,7 @@ final class Version20201031120433 extends AbstractMigration
         $this->addSql('CREATE TABLE survey (id INT AUTO_INCREMENT NOT NULL, owner_id INT NOT NULL, role_id INT NOT NULL, client_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, created_at DATETIME NOT NULL, uptaded_at DATETIME DEFAULT NULL, validated_at DATETIME DEFAULT NULL, deleted_At DATETIME DEFAULT NULL, is_active TINYINT(1) DEFAULT \'0\', INDEX IDX_AD5F9BFC7E3C61F9 (owner_id), INDEX IDX_AD5F9BFCD60322AC (role_id), INDEX IDX_AD5F9BFC19EB6921 (client_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE survey_survey_item (survey_id INT NOT NULL, survey_item_id INT NOT NULL, INDEX IDX_610AFAD0B3FE509D (survey_id), INDEX IDX_610AFAD0564371E5 (survey_item_id), PRIMARY KEY(survey_id, survey_item_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE survey_item (id INT AUTO_INCREMENT NOT NULL, owner_id INT NOT NULL, role_id INT NOT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, created_at DATETIME NOT NULL, uptaded_at DATETIME DEFAULT NULL, validated_at DATETIME DEFAULT NULL, deleted_At DATETIME DEFAULT NULL, is_active TINYINT(1) DEFAULT \'0\', INDEX IDX_D9F225D57E3C61F9 (owner_id), INDEX IDX_D9F225D5D60322AC (role_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, uptaded_at DATETIME DEFAULT NULL, validated_at DATETIME DEFAULT NULL, deleted_At DATETIME DEFAULT NULL, is_active TINYINT(1) DEFAULT \'0\', UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE content ADD CONSTRAINT FK_FEC530A97E3C61F9 FOREIGN KEY (owner_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE content ADD CONSTRAINT FK_FEC530A9D60322AC FOREIGN KEY (role_id) REFERENCES role (id)');
         $this->addSql('ALTER TABLE content ADD CONSTRAINT FK_FEC530A9CCD7E912 FOREIGN KEY (menu_id) REFERENCES menu (id)');
@@ -62,7 +63,6 @@ final class Version20201031120433 extends AbstractMigration
         $this->addSql('ALTER TABLE survey_survey_item ADD CONSTRAINT FK_610AFAD0564371E5 FOREIGN KEY (survey_item_id) REFERENCES survey_item (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE survey_item ADD CONSTRAINT FK_D9F225D57E3C61F9 FOREIGN KEY (owner_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE survey_item ADD CONSTRAINT FK_D9F225D5D60322AC FOREIGN KEY (role_id) REFERENCES role (id)');
-        $this->addSql('ALTER TABLE user ADD created_at DATETIME NOT NULL, ADD uptaded_at DATETIME DEFAULT NULL, ADD validated_at DATETIME DEFAULT NULL, ADD deleted_At DATETIME DEFAULT NULL, ADD is_active TINYINT(1) DEFAULT \'0\'');
     }
 
     public function down(Schema $schema) : void
@@ -85,6 +85,18 @@ final class Version20201031120433 extends AbstractMigration
         $this->addSql('ALTER TABLE estimate DROP FOREIGN KEY FK_D2EA4607B3FE509D');
         $this->addSql('ALTER TABLE survey_survey_item DROP FOREIGN KEY FK_610AFAD0B3FE509D');
         $this->addSql('ALTER TABLE survey_survey_item DROP FOREIGN KEY FK_610AFAD0564371E5');
+        $this->addSql('ALTER TABLE content DROP FOREIGN KEY FK_FEC530A97E3C61F9');
+        $this->addSql('ALTER TABLE content_type DROP FOREIGN KEY FK_41BCBAEC7E3C61F9');
+        $this->addSql('ALTER TABLE estimate DROP FOREIGN KEY FK_D2EA460719EB6921');
+        $this->addSql('ALTER TABLE image DROP FOREIGN KEY FK_C53D045F7E3C61F9');
+        $this->addSql('ALTER TABLE menu DROP FOREIGN KEY FK_7D053A937E3C61F9');
+        $this->addSql('ALTER TABLE message DROP FOREIGN KEY FK_B6BD307F4983082');
+        $this->addSql('ALTER TABLE message DROP FOREIGN KEY FK_B6BD307FB703C510');
+        $this->addSql('ALTER TABLE sub_menu DROP FOREIGN KEY FK_5A93A5527E3C61F9');
+        $this->addSql('ALTER TABLE sub_sub_menu DROP FOREIGN KEY FK_E03C4B0B7E3C61F9');
+        $this->addSql('ALTER TABLE survey DROP FOREIGN KEY FK_AD5F9BFC7E3C61F9');
+        $this->addSql('ALTER TABLE survey DROP FOREIGN KEY FK_AD5F9BFC19EB6921');
+        $this->addSql('ALTER TABLE survey_item DROP FOREIGN KEY FK_D9F225D57E3C61F9');
         $this->addSql('DROP TABLE content');
         $this->addSql('DROP TABLE content_type');
         $this->addSql('DROP TABLE estimate');
@@ -98,6 +110,6 @@ final class Version20201031120433 extends AbstractMigration
         $this->addSql('DROP TABLE survey');
         $this->addSql('DROP TABLE survey_survey_item');
         $this->addSql('DROP TABLE survey_item');
-        $this->addSql('ALTER TABLE user DROP created_at, DROP uptaded_at, DROP validated_at, DROP deleted_At, DROP is_active');
+        $this->addSql('DROP TABLE user');
     }
 }
