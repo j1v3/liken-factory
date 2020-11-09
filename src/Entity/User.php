@@ -13,9 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface
-{
-    use Stampable;
-    
+{   
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -38,6 +36,30 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="uptaded_at", type="datetime", nullable=true)
+     */
+    protected $updatedAt;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="validated_at", type="datetime", nullable=true)
+     */
+    protected $validatedAt;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    protected $deletedAt;
+
+    /**
+     * @var Boolean
+     * @ORM\Column(name="is_active", type="boolean", nullable=true, options={"default": 0})
+     */
+    protected $isActive;
 
     /**
      * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="owner")
@@ -65,21 +87,6 @@ class User implements UserInterface
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity=SurveyItem::class, mappedBy="owner")
-     */
-    private $surveyItems;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Survey::class, mappedBy="owner")
-     */
-    private $surveys;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Survey::class, mappedBy="client")
-     */
-    private $surveysClient;
-
-    /**
      * @ORM\OneToMany(targetEntity=Estimate::class, mappedBy="client")
      */
     private $estimates;
@@ -96,11 +103,13 @@ class User implements UserInterface
         $this->subSubMenus = new ArrayCollection();
         $this->contents = new ArrayCollection();
         $this->images = new ArrayCollection();
-        $this->surveyItems = new ArrayCollection();
-        $this->surveys = new ArrayCollection();
-        $this->surveysClient = new ArrayCollection();
         $this->estimates = new ArrayCollection();
         $this->contentTypes = new ArrayCollection();
+        if (!$this->getId()) {
+            $this->setCreatedAt(new \DateTime());
+        } else {
+            $this->setUpdatedAt(new \DateTime());
+        }
     }
 
     public function getId(): ?int
@@ -179,6 +188,121 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+            /**
+     * Set createdAt
+     *
+     * @param  \DateTime    $createdAt
+     * @return self
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param  \DateTime    $updatedAt
+     * @return self
+     */
+    public function setUptadedAt(\DateTime $updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set validatedAt
+     *
+     * @param  \DateTime    $validatedAt
+     * @return self
+     */
+    public function setValidatedAt(\DateTime $validatedAt)
+    {
+        $this->validatedAt = $validatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get validatedAt
+     *
+     * @return \DateTime
+     */
+    public function getValidatedAt()
+    {
+        return $this->validatedAt;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param  \DateTime    $deletedAt
+     * @return self
+     */
+    public function setDeletedAt(\DateTime $deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param  Boolean    $isActive
+     * @return self
+     */
+    public function setIsActive(Boolean $isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return Boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 
     /**
@@ -325,96 +449,6 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($image->getOwner() === $this) {
                 $image->setOwner(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SurveyItem[]
-     */
-    public function getSurveyItems(): Collection
-    {
-        return $this->surveyItems;
-    }
-
-    public function addSurveyItem(SurveyItem $surveyItem): self
-    {
-        if (!$this->surveyItems->contains($surveyItem)) {
-            $this->surveyItems[] = $surveyItem;
-            $surveyItem->setOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSurveyItem(SurveyItem $surveyItem): self
-    {
-        if ($this->surveyItems->removeElement($surveyItem)) {
-            // set the owning side to null (unless already changed)
-            if ($surveyItem->getOwner() === $this) {
-                $surveyItem->setOwner(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Survey[]
-     */
-    public function getSurveys(): Collection
-    {
-        return $this->surveys;
-    }
-
-    public function addSurvey(Survey $survey): self
-    {
-        if (!$this->surveys->contains($survey)) {
-            $this->surveys[] = $survey;
-            $survey->setOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSurvey(Survey $survey): self
-    {
-        if ($this->surveys->removeElement($survey)) {
-            // set the owning side to null (unless already changed)
-            if ($survey->getOwner() === $this) {
-                $survey->setOwner(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Survey[]
-     */
-    public function getSurveysClient(): Collection
-    {
-        return $this->surveysClient;
-    }
-
-    public function addSurveysClient(Survey $surveysClient): self
-    {
-        if (!$this->surveysClient->contains($surveysClient)) {
-            $this->surveysClient[] = $surveysClient;
-            $surveysClient->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSurveysClient(Survey $surveysClient): self
-    {
-        if ($this->surveysClient->removeElement($surveysClient)) {
-            // set the owning side to null (unless already changed)
-            if ($surveysClient->getClient() === $this) {
-                $surveysClient->setClient(null);
             }
         }
 

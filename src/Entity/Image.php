@@ -42,18 +42,6 @@ class Image
      */
     private $contents;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="images")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $owner;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="images")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $role;
-
     public function __construct()
     {
         $this->contents = new ArrayCollection();

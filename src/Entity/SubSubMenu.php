@@ -39,21 +39,14 @@ class SubSubMenu
     private $rank;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="subSubMenus")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $owner;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="subSubMenus")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $role;
-
-    /**
      * @ORM\OneToMany(targetEntity=Content::class, mappedBy="subSubMenu")
      */
     private $content;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=SubMenu::class, inversedBy="subSubMenus")
+     */
+    private $subMenu;
 
     public function __construct()
     {
@@ -101,30 +94,6 @@ class SubSubMenu
         return $this;
     }
 
-    public function getOwner(): ?User
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(?User $owner): self
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-    public function getRole(): ?Role
-    {
-        return $this->role;
-    }
-
-    public function setRole(?Role $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Content[]
      */
@@ -151,6 +120,18 @@ class SubSubMenu
                 $content->setSubSubMenu(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSubMenu(): ?SubMenu
+    {
+        return $this->subMenu;
+    }
+
+    public function setSubMenu(?SubMenu $subMenu): self
+    {
+        $this->subMenu = $subMenu;
 
         return $this;
     }

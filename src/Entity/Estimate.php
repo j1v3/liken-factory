@@ -26,11 +26,6 @@ class Estimate
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Survey::class, inversedBy="estimates")
-     */
-    private $survey;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="estimates")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -49,18 +44,6 @@ class Estimate
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getSurvey(): ?Survey
-    {
-        return $this->survey;
-    }
-
-    public function setSurvey(?Survey $survey): self
-    {
-        $this->survey = $survey;
 
         return $this;
     }

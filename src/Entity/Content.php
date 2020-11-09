@@ -23,16 +23,6 @@ class Content
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $title;
@@ -51,18 +41,6 @@ class Content
      * @ORM\Column(type="blob", nullable=true)
      */
     private $page;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="contents")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $owner;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="contents")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $role;
 
     /**
      * @ORM\ManyToOne(targetEntity=Menu::class, inversedBy="content")
@@ -94,14 +72,14 @@ class Content
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(string $name): self
+    public function setTitle(string $title): self
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
@@ -114,18 +92,6 @@ class Content
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(?string $title): self
-    {
-        $this->title = $title;
 
         return $this;
     }
@@ -162,30 +128,6 @@ class Content
     public function setPage($page): self
     {
         $this->page = $page;
-
-        return $this;
-    }
-
-    public function getOwner(): ?User
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(?User $owner): self
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-    public function getRole(): ?Role
-    {
-        return $this->role;
-    }
-
-    public function setRole(?Role $role): self
-    {
-        $this->role = $role;
 
         return $this;
     }

@@ -59,16 +59,6 @@ class Role
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity=SurveyItem::class, mappedBy="role")
-     */
-    private $surveyItems;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Survey::class, mappedBy="role")
-     */
-    private $surveys;
-
-    /**
      * @ORM\OneToMany(targetEntity=ContentType::class, mappedBy="Role")
      */
     private $contentTypes;
@@ -80,8 +70,6 @@ class Role
         $this->subSubMenus = new ArrayCollection();
         $this->contents = new ArrayCollection();
         $this->images = new ArrayCollection();
-        $this->surveyItems = new ArrayCollection();
-        $this->surveys = new ArrayCollection();
         $this->contentTypes = new ArrayCollection();
     }
 
@@ -258,66 +246,6 @@ class Role
             // set the owning side to null (unless already changed)
             if ($image->getRole() === $this) {
                 $image->setRole(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SurveyItem[]
-     */
-    public function getSurveyItems(): Collection
-    {
-        return $this->surveyItems;
-    }
-
-    public function addSurveyItem(SurveyItem $surveyItem): self
-    {
-        if (!$this->surveyItems->contains($surveyItem)) {
-            $this->surveyItems[] = $surveyItem;
-            $surveyItem->setRole($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSurveyItem(SurveyItem $surveyItem): self
-    {
-        if ($this->surveyItems->removeElement($surveyItem)) {
-            // set the owning side to null (unless already changed)
-            if ($surveyItem->getRole() === $this) {
-                $surveyItem->setRole(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Survey[]
-     */
-    public function getSurveys(): Collection
-    {
-        return $this->surveys;
-    }
-
-    public function addSurvey(Survey $survey): self
-    {
-        if (!$this->surveys->contains($survey)) {
-            $this->surveys[] = $survey;
-            $survey->setRole($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSurvey(Survey $survey): self
-    {
-        if ($this->surveys->removeElement($survey)) {
-            // set the owning side to null (unless already changed)
-            if ($survey->getRole() === $this) {
-                $survey->setRole(null);
             }
         }
 

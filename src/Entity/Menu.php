@@ -38,18 +38,6 @@ class Menu
     private $rank;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="menus")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $owner;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="menus")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $role;
-
-    /**
      * @ORM\OneToMany(targetEntity=SubMenu::class, mappedBy="menu", orphanRemoval=true)
      */
     private $subMenus;
@@ -105,31 +93,7 @@ class Menu
 
         return $this;
     }
-
-    public function getOwner(): ?User
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(?User $owner): self
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-    public function getRole(): ?Role
-    {
-        return $this->role;
-    }
-
-    public function setRole(?Role $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
+    
     /**
      * @return Collection|SubMenu[]
      */

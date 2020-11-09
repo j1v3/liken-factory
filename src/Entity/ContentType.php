@@ -30,18 +30,6 @@ class ContentType
      */
     private $description;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="contentTypes")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $owner;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="contentTypes")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Role;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -67,30 +55,6 @@ class ContentType
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getOwner(): ?User
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(?User $owner): self
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-    public function getRole(): ?Role
-    {
-        return $this->Role;
-    }
-
-    public function setRole(?Role $Role): self
-    {
-        $this->Role = $Role;
 
         return $this;
     }
