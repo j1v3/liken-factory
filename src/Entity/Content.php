@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\ContentRepository;
 use App\Traits\Stampable;
+use App\Repository\ContentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

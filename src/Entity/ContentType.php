@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ContentTypeRepository;
 use App\Traits\Stampable;
+use App\Repository\ContentTypeRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource
  * @ORM\Entity(repositoryClass=ContentTypeRepository::class)
  */
 class ContentType
