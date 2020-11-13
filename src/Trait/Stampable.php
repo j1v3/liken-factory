@@ -17,7 +17,7 @@ trait Stampable
     protected $updatedAt;
 
     /**
-     * @var \DateTime
+     * @var bool
      * @ORM\Column(name="validated_at", type="datetime", nullable=true)
      */
     protected $validatedAt;
@@ -29,10 +29,10 @@ trait Stampable
     protected $deletedAt;
 
     /**
-     * @var Boolean
-     * @ORM\Column(name="is_active", type="boolean", nullable=true, options={"default": 0})
+     * @var bool
+     * @ORM\Column(name="is_Active", type="boolean", options={"default":false})
      */
-    protected $isActive;
+    protected $isActive = false;
 
     public function __construct()
     {
@@ -138,10 +138,10 @@ trait Stampable
     /**
      * Set isActive
      *
-     * @param  Boolean    $isActive
+     * @param  boolean    $isActive
      * @return self
      */
-    public function setIsActive(Boolean $isActive)
+    public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
 
@@ -151,7 +151,7 @@ trait Stampable
     /**
      * Get isActive
      *
-     * @return Boolean
+     * @return boolean
      */
     public function getIsActive()
     {
