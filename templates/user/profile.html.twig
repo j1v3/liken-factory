@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+  <div class="content">
+  <div class="col-6 offset-3">
+    <div class="card">
+      <div class="card-block">
+        <div class="row">
+          <div class="col-2">
+            <img src="https://zen-of-programming.com/react-intro/selfiesquare.jpg" class="profile-pic">
+          </div>
+          <div class="col-10 profile-row">
+            <div class="row">
+              <a href="#">The Zen of Programming</a>
+            </div>
+            <div class="row">
+              <small class="post-time">10 mins</small>
+            </div>
+          </div>
+        </div>
+        <p>Hello World!</p>
+        <div>
+          <span class="fa-stack fa-sm">
+            <i class="fa fa-circle fa-stack-2x blue-icon"></i>
+            <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
+          </span>
+        </div>
+        <div>
+          <hr class="remove-margin">
+          <div>
+            <button type="button" class="btn no-outline btn-secondary">
+              <i class="fa fa-thumbs-o-up fa-4 align-middle" aria-hidden="true"></i>
+              &nbsp;
+              <span class="align-middle">Like</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        <textarea class="form-control" placeholder="Write a comment..."></textarea>
+        <small>120 Remaining</small>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
