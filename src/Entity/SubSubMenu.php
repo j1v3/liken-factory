@@ -61,6 +61,11 @@ class SubSubMenu
      */
     private $subMenu;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Menu::class, inversedBy="subSubMenus")
+     */
+    private $menus;
+
     public function __construct()
     {
         $this->content = new ArrayCollection();
@@ -169,6 +174,18 @@ class SubSubMenu
     public function setSubMenu(?SubMenu $subMenu): self
     {
         $this->subMenu = $subMenu;
+
+        return $this;
+    }
+
+    public function getMenus(): ?Menu
+    {
+        return $this->menus;
+    }
+
+    public function setMenus(?Menu $menus): self
+    {
+        $this->menus = $menus;
 
         return $this;
     }

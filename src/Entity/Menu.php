@@ -59,10 +59,21 @@ class Menu
      */
     private $content;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SubSubMenu::class, mappedBy="menus")
+     */
+    private $subSubMenus;
+
     public function __construct()
     {
         $this->subMenus = new ArrayCollection();
         $this->content = new ArrayCollection();
+        $this->subSubMenus = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -188,5 +199,69 @@ class Menu
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|SubSubMenu[]
+     */
+    public function getSubSubMenus(): Collection
+    {
+        return $this->subSubMenus;
+    }
+
+    public function addSubSubMenu(SubSubMenu $subSubMenu): self
+    {
+        if (!$this->subSubMenus->contains($subSubMenu)) {
+            $this->subSubMenus[] = $subSubMenu;
+            $subSubMenu->setMenus($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubSubMenu(SubSubMenu $subSubMenu): self
+    {
+        if ($this->subSubMenus->removeElement($subSubMenu)) {
+            // set the owning side to null (unless already changed)
+            if ($subSubMenu->getMenus() === $this) {
+                $subSubMenu->setMenus(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNavigation()
+    {
+        $a = 0;
+        $arrayNavMenu = [];
+
+            if ($this->getSubMenus()) {
+
+                $arrayNavMenu += array_merge($arrayNavMenu, [ 'menu'.$a => $this->getName() ]);
+
+                if ($this->getSubSubMenus()) {
+                    $b = 0;
+                    foreach ($this->getSubMenus() as $currentSubMenu) 
+                    {
+                       $c = 0;
+                        foreach ($this->getSubSubMenus() as $currentSubSubMenu) {
+                            $arrayNavMenu += array_merge($arrayNavMenu, [ 'subSubMenu'.$a.$b.$c => $currentSubSubMenu-getName() ]);
+                            $c++;        
+                        }
+                    }
+                    $b++;
+                }
+                else {
+                    $arrayNavMenu += array_merge($arrayNavMenu, [ 'subMenu'.$a.$b => $currentSubMenu->getName() ]);
+                }
+            }
+            else {
+                $arrayNavMenu  = [
+                    "menu".$a  => $this->getMenu()
+                ];
+            }
+
+        return $arrayNavMenu;
     }
 }
