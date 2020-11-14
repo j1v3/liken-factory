@@ -55,6 +55,11 @@ class Menu
     private $subMenus;
 
     /**
+     * @ORM\OneToMany(targetEntity=SubSubMenu::class, mappedBy="menu")
+     */
+    private $subSubMenus;
+
+    /**
      * @ORM\OneToMany(targetEntity=Content::class, mappedBy="menu")
      */
     private $content;
@@ -62,6 +67,7 @@ class Menu
     public function __construct()
     {
         $this->subMenus = new ArrayCollection();
+        $this->subSubMenus = new ArrayCollection();
         $this->content = new ArrayCollection();
     }
 
@@ -154,6 +160,36 @@ class Menu
             // set the owning side to null (unless already changed)
             if ($subMenu->getMenu() === $this) {
                 $subMenu->setMenu(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SubSubMenu[]
+     */
+    public function getSubSubMenus(): Collection
+    {
+        return $this->subSubMenus;
+    }
+
+    public function addSubSubMenu(SubSubMenu $subSubMenu): self
+    {
+        if (!$this->subSubMenus->contains($subSubMenu)) {
+            $this->subSubMenus[] = $subSubMenu;
+            $subSubMenu->setMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubSubMenu(SubSubMenu $subSubMenu): self
+    {
+        if ($this->subSubMenus->removeElement($subSubMenu)) {
+            // set the owning side to null (unless already changed)
+            if ($subSubMenu->getMenu() === $this) {
+                $subSubMenu->setMenu(null);
             }
         }
 
