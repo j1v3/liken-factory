@@ -63,8 +63,9 @@ class SubSubMenu
 
     /**
      * @ORM\ManyToOne(targetEntity=Menu::class, inversedBy="subSubMenus")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $menus;
+    private $menu;
 
     public function __construct()
     {
@@ -178,14 +179,14 @@ class SubSubMenu
         return $this;
     }
 
-    public function getMenus(): ?Menu
+    public function getMenu(): ?Menu
     {
-        return $this->menus;
+        return $this->menu;
     }
 
-    public function setMenus(?Menu $menus): self
+    public function setMenu(?Menu $menu): self
     {
-        $this->menus = $menus;
+        $this->menu = $menu;
 
         return $this;
     }

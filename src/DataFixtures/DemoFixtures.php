@@ -167,6 +167,7 @@ class DemoFixtures extends Fixture
         $subSubMenu1->setRank("1");
         $subSubMenu1->setOwner($this->userRepository->findOneByEmail("webmaster@likenfactory.com"));
         $subSubMenu1->setRole($this->roleRepository->findOneByName("private"));
+        $subSubMenu1->setMenu($this->menuRepository->findOneByName("Menu3"));
         $subSubMenu1->setSubMenu($this->subMenuRepository->findOneByName("SubMenu2"));
         $subSubMenu1->setCreatedAt(new \DateTime('now'));
         $manager->persist($subSubMenu1);
