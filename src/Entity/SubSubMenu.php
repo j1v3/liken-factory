@@ -67,9 +67,9 @@ class SubSubMenu
      */
     private $menu;
 
-    public function __construct()
+    public function __toString() 
     {
-        $this->content = new ArrayCollection();
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -137,6 +137,30 @@ class SubSubMenu
         return $this;
     }
 
+    public function getSubMenu(): ?SubMenu
+    {
+        return $this->subMenu;
+    }
+
+    public function setSubMenu(?SubMenu $subMenu): self
+    {
+        $this->subMenu = $subMenu;
+
+        return $this;
+    }
+
+    public function getMenu(): ?Menu
+    {
+        return $this->menu;
+    }
+
+    public function setMenu(?Menu $menu): self
+    {
+        $this->menu = $menu;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Content[]
      */
@@ -167,27 +191,4 @@ class SubSubMenu
         return $this;
     }
 
-    public function getSubMenu(): ?SubMenu
-    {
-        return $this->subMenu;
-    }
-
-    public function setSubMenu(?SubMenu $subMenu): self
-    {
-        $this->subMenu = $subMenu;
-
-        return $this;
-    }
-
-    public function getMenu(): ?Menu
-    {
-        return $this->menu;
-    }
-
-    public function setMenu(?Menu $menu): self
-    {
-        $this->menu = $menu;
-
-        return $this;
-    }
 }

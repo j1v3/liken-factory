@@ -12,7 +12,22 @@
 <div class="example-wrapper">
 
     {% for nav in navigation %}
-        <p>{{ nav }} test</p>
-    {% endfor %}
+        {% if nav.menu|default %}
+            <ul>
+                <li>{{nav.menu.name}}</li>
+                {% if nav.subMenu|default %}
+                    <ul>
+                        <li>{{nav.subMenu.name}}</li>
+                        {% if nav.subSubMenu|default %}
+                            <ul>
+                                <li>{{nav.subSubMenu.name}}</li>
+                            </ul>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </ul>
+        {% endif %}
+    {% endfor %} 
+
 </div>
 {% endblock %}

@@ -36,15 +36,11 @@ class MainController extends AbstractController
         $nav = [];
 
         $menus = $this->menuRepository->findAll();
-// dump($menus);die();
-        // while ($menus) {
+
             foreach ($menus as $item)
             {
-               $nav = array_merge($nav, $item->getNavigation()); 
+                array_push($nav, $item->getNavigation()); 
             }
-        // }
-
-// die();
 
         return $this->render('main/navigation.html.twig', [
             'navigation' => $nav,

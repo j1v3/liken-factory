@@ -64,17 +64,11 @@ class Menu
      */
     private $content;
 
-    /**
-     * @ORM\OneToMany(targetEntity=SubSubMenu::class, mappedBy="menus")
-     */
-    private $subSubMenus;
-
     public function __construct()
     {
         $this->subMenus = new ArrayCollection();
         $this->subSubMenus = new ArrayCollection();
         $this->content = new ArrayCollection();
-        $this->subSubMenus = new ArrayCollection();
     }
 
     public function __toString()
@@ -237,67 +231,80 @@ class Menu
         return $this;
     }
 
-    /**
-     * @return Collection|SubSubMenu[]
-     */
-    public function getSubSubMenus(): Collection
-    {
-        return $this->subSubMenus;
-    }
-
-    public function addSubSubMenu(SubSubMenu $subSubMenu): self
-    {
-        if (!$this->subSubMenus->contains($subSubMenu)) {
-            $this->subSubMenus[] = $subSubMenu;
-            $subSubMenu->setMenus($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSubSubMenu(SubSubMenu $subSubMenu): self
-    {
-        if ($this->subSubMenus->removeElement($subSubMenu)) {
-            // set the owning side to null (unless already changed)
-            if ($subSubMenu->getMenus() === $this) {
-                $subSubMenu->setMenus(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getNavigation()
     {
-        $a = 0;
         $arrayNavMenu = [];
-
+            
+            $arrayNavMenu = array_merge($arrayNavMenu, [ 'menu' => 
+                                                            [
+                                                                'name'        => $this->getName(),
+                                                                'description' => $this->getDescription(),
+                                                                // 'content'     => $this->getContent()->getName(),
+                                                                'rank'        => $this->getRank(),
+                                                                'role'        => $this->getRole()->getName(),
+                                                                'owner'       => $this->getOwner()->getUserName(),
+                                                                'isActive'    => $this->getIsActive()
+                                                            ]
+                                                        ]
+                                                    );
+ 
             if ($this->getSubMenus()) {
 
-                $arrayNavMenu += array_merge($arrayNavMenu, [ 'menu'.$a => $this->getName() ]);
+                foreach ($this->getSubMenus() as $currentSubMenu) {
+            
+                    if ($this->getSubSubMenus()) {
 
-                if ($this->getSubSubMenus()) {
-                    $b = 0;
-                    foreach ($this->getSubMenus() as $currentSubMenu) 
-                    {
-                       $c = 0;
+                        $arrayNavMenu = array_merge($arrayNavMenu, [ 'subMenu' => 
+                                                                    [
+                                                                        'name'        => $currentSubMenu->getName(),
+                                                                        'description' => $currentSubMenu->getDescription(),
+                                                                        // 'content'     => $currentSubMenu->getContent()->getName(),
+                                                                        'rank'        => $currentSubMenu->getRank(),
+                                                                        'role'        => $currentSubMenu->getRole()->getName(),
+                                                                        'owner'       => $currentSubMenu->getOwner()->getUserName(),
+                                                                        'menu'        => $currentSubMenu->getMenu()->getName(),
+                                                                        'isActive'    => $currentSubMenu->getIsActive()
+                                                                    ]
+                                                                ]
+                                                            );
+
                         foreach ($this->getSubSubMenus() as $currentSubSubMenu) {
-                            $arrayNavMenu += array_merge($arrayNavMenu, [ 'subSubMenu'.$a.$b.$c => $currentSubSubMenu-getName() ]);
-                            $c++;        
+
+                            $arrayNavMenu = array_merge($arrayNavMenu, [ 'subSubMenu' => 
+                                                                        [
+                                                                            'name'        => $currentSubSubMenu->getName(),
+                                                                            'description' => $currentSubSubMenu->getDescription(),
+                                                                            // 'content'     => $currentSubSubMenu->getContent()->getName(),
+                                                                            'rank'        => $currentSubSubMenu->getRank(),
+                                                                            'role'        => $currentSubSubMenu->getRole()->getName(),
+                                                                            'owner'       => $currentSubSubMenu->getOwner()->getUserName(),
+                                                                            'menu'        => $currentSubSubMenu->getMenu()->getName(),
+                                                                            'subMenu'     => $currentSubSubMenu->getSubMenu()->getName(),
+                                                                            'isActive'    => $currentSubSubMenu->getIsActive()
+                                                                        ]
+                                                                    ]
+                                                                );     
                         }
                     }
-                    $b++;
-                }
-                else {
-                    $arrayNavMenu += array_merge($arrayNavMenu, [ 'subMenu'.$a.$b => $currentSubMenu->getName() ]);
+                    else {
+                    
+                        $arrayNavMenu = array_merge($arrayNavMenu, [ 'subMenu' => 
+                                                                    [
+                                                                        'name'        => $currentSubMenu->getName(),
+                                                                        'description' => $currentSubMenu->getDescription(),
+                                                                        // 'content'     => $currentSubMenu->getContent()->getName(),
+                                                                        'rank'        => $currentSubMenu->getRank(),
+                                                                        'role'        => $currentSubMenu->getRole()->getName(),
+                                                                        'owner'       => $currentSubMenu->getOwner()->getUserName(),
+                                                                        'menu'        => $currentSubMenu->getMenu()->getName(),
+                                                                        'isActive'    => $currentSubMenu->getIsActive()
+                                                                    ]
+                                                                ]
+                                                            );
+                    }
                 }
             }
-            else {
-                $arrayNavMenu  = [
-                    "menu".$a  => $this->getMenu()
-                ];
-            }
-
+            
         return $arrayNavMenu;
     }
 }

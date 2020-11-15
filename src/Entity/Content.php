@@ -65,17 +65,17 @@ class Content
     private $role;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Menu::class, inversedBy="content")
+     * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="content")
      */
     private $menu;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SubMenu::class, inversedBy="content")
+     * @ORM\OneToMany(targetEntity=SubMenu::class, mappedBy="content")
      */
     private $subMenu;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SubSubMenu::class, inversedBy="content")
+     * @ORM\OneToMany(targetEntity=SubSubMenu::class, mappedBy="content")
      */
     private $subSubMenu;
 
