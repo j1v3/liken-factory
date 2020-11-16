@@ -65,17 +65,17 @@ class Content
     private $role;
 
     /**
-     * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="content")
+     * @ORM\ManyToOne(targetEntity=Menu::class, inversedBy="contents")
      */
     private $menu;
 
     /**
-     * @ORM\OneToMany(targetEntity=SubMenu::class, mappedBy="content")
+     * @ORM\ManyToOne(targetEntity=SubMenu::class, inversedBy="contents")
      */
     private $subMenu;
 
     /**
-     * @ORM\OneToMany(targetEntity=SubSubMenu::class, mappedBy="content")
+     * @ORM\ManyToOne(targetEntity=SubSubMenu::class, inversedBy="contents")
      */
     private $subSubMenu;
 
@@ -83,6 +83,11 @@ class Content
      * @ORM\ManyToMany(targetEntity=Image::class, mappedBy="contents")
      */
     private $images;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $rank;
 
     public function __construct()
     {
@@ -254,6 +259,18 @@ class Content
         if ($this->images->removeElement($image)) {
             $image->removeContent($this);
         }
+
+        return $this;
+    }
+
+    public function getRank(): ?int
+    {
+        return $this->rank;
+    }
+
+    public function setRank(int $rank): self
+    {
+        $this->rank = $rank;
 
         return $this;
     }

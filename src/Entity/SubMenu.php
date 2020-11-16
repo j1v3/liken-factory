@@ -58,17 +58,19 @@ class SubMenu
 
     /**
      * @ORM\OneToMany(targetEntity=Content::class, mappedBy="subMenu")
+     * @ORM\OrderBy({"rank" = "ASC"})
      */
-    private $content;
+    private $contents;
 
     /**
      * @ORM\OneToMany(targetEntity=SubSubMenu::class, mappedBy="subMenu", orphanRemoval=true)
+     * @ORM\OrderBy({"rank" = "ASC"})
      */
     private $subSubMenus;
 
     public function __construct()
     {
-        $this->content = new ArrayCollection();
+        $this->contents = new ArrayCollection();
         $this->subSubMenus = new ArrayCollection();
     }
 

@@ -51,24 +51,27 @@ class Menu
 
     /**
      * @ORM\OneToMany(targetEntity=SubMenu::class, mappedBy="menu", orphanRemoval=true)
+     * @ORM\OrderBy({"rank" = "ASC"})
      */
     private $subMenus;
 
     /**
      * @ORM\OneToMany(targetEntity=SubSubMenu::class, mappedBy="menu")
+     * @ORM\OrderBy({"rank" = "ASC"})
      */
     private $subSubMenus;
 
     /**
      * @ORM\OneToMany(targetEntity=Content::class, mappedBy="menu")
+     * @ORM\OrderBy({"rank" = "ASC"})
      */
-    private $content;
+    private $contents;
 
     public function __construct()
     {
         $this->subMenus = new ArrayCollection();
         $this->subSubMenus = new ArrayCollection();
-        $this->content = new ArrayCollection();
+        $this->contents = new ArrayCollection();
     }
 
     public function __toString()
@@ -204,27 +207,27 @@ class Menu
     /**
      * @return Collection|Content[]
      */
-    public function getContent(): Collection
+    public function getContents(): Collection
     {
-        return $this->content;
+        return $this->contents;
     }
 
-    public function addContent(Content $content): self
+    public function addContents(Content $contents): self
     {
-        if (!$this->content->contains($content)) {
-            $this->content[] = $content;
-            $content->setMenu($this);
+        if (!$this->contents->contains($contents)) {
+            $this->contents[] = $contents;
+            $contents->setMenu($this);
         }
 
         return $this;
     }
 
-    public function removeContent(Content $content): self
+    public function removeContents(Content $contents): self
     {
-        if ($this->content->removeElement($content)) {
+        if ($this->contents->removeElement($contents)) {
             // set the owning side to null (unless already changed)
-            if ($content->getMenu() === $this) {
-                $content->setMenu(null);
+            if ($contents->getMenu() === $this) {
+                $contents->setMenu(null);
             }
         }
 
@@ -304,7 +307,7 @@ class Menu
                     }
                 }
             }
-            
+
         return $arrayNavMenu;
     }
 }

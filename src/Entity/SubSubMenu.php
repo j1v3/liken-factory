@@ -53,7 +53,7 @@ class SubSubMenu
     /**
      * @ORM\OneToMany(targetEntity=Content::class, mappedBy="subSubMenu")
      */
-    private $content;
+    private $contents;
 
     /**
      * @ORM\ManyToOne(targetEntity=SubMenu::class, inversedBy="subSubMenus")
@@ -66,6 +66,11 @@ class SubSubMenu
      * @ORM\JoinColumn(nullable=false)
      */
     private $menu;
+
+    public function __construct()
+    {
+        $this->contents = new ArrayCollection();
+    }
 
     public function __toString() 
     {

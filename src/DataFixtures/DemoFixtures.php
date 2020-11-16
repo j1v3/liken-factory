@@ -179,6 +179,7 @@ class DemoFixtures extends Fixture
         $content1->setTitle("Content1");
         $content1->setSubTitle("Liken Factory demo content");
         $content1->setDescription("Demo content 1 for demo use");
+        $content1->setRank("1");
         $content1->setPage("
         <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel mi sit amet quam ultrices iaculis. Fusce sed sapien molestie, finibus ligula a, vehicula neque. Maecenas non sem ante. Cras rutrum magna vel orci vehicula tristique. Donec non velit id elit consectetur pharetra. Cras non aliquam nisi. Fusce aliquet a metus eget vulputate. Phasellus tincidunt arcu non nulla tincidunt ornare. Nam posuere auctor purus ut venenatis. Etiam aliquam lorem id lectus sodales porta. Curabitur turpis nisl, ornare nec dignissim sit amet, pretium vitae nulla. Nam sit amet bibendum nunc. Vestibulum eget enim finibus, maximus tellus id, vestibulum magna. Proin ac condimentum ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.</div>
         <div>Suspendisse potenti. Donec quis elit ac ligula egestas consectetur. Aliquam convallis odio vel rutrum aliquet. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus egestas quam a tempor laoreet. Sed at tortor eu velit sollicitudin efficitur. Ut tempor elit in velit hendrerit, id ullamcorper lectus lobortis. Nam euismod facilisis pharetra. Vestibulum congue, libero et pellentesque luctus, urna elit auctor ligula, ut euismod felis risus id mi.</div>     
@@ -195,6 +196,7 @@ class DemoFixtures extends Fixture
         $content2->setTitle("Content2");
         $content2->setSubTitle("Liken Factory demo content");
         $content2->setDescription("Demo content 2 for demo use");
+        $content2->setRank(2);
         $content2->setPage("
         <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel mi sit amet quam ultrices iaculis. Fusce sed sapien molestie, finibus ligula a, vehicula neque. Maecenas non sem ante. Cras rutrum magna vel orci vehicula tristique. Donec non velit id elit consectetur pharetra. Cras non aliquam nisi. Fusce aliquet a metus eget vulputate. Phasellus tincidunt arcu non nulla tincidunt ornare. Nam posuere auctor purus ut venenatis. Etiam aliquam lorem id lectus sodales porta. Curabitur turpis nisl, ornare nec dignissim sit amet, pretium vitae nulla. Nam sit amet bibendum nunc. Vestibulum eget enim finibus, maximus tellus id, vestibulum magna. Proin ac condimentum ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.</div>
         <div>Suspendisse potenti. Donec quis elit ac ligula egestas consectetur. Aliquam convallis odio vel rutrum aliquet. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus egestas quam a tempor laoreet. Sed at tortor eu velit sollicitudin efficitur. Ut tempor elit in velit hendrerit, id ullamcorper lectus lobortis. Nam euismod facilisis pharetra. Vestibulum congue, libero et pellentesque luctus, urna elit auctor ligula, ut euismod felis risus id mi.</div>     
@@ -211,6 +213,7 @@ class DemoFixtures extends Fixture
         $content3->setTitle("Content3");
         $content3->setSubTitle("Liken Factory demo content");
         $content3->setDescription("Demo content 3 for demo use");
+        $content3->setRank(3);
         $content3->setPage("
         <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel mi sit amet quam ultrices iaculis. Fusce sed sapien molestie, finibus ligula a, vehicula neque. Maecenas non sem ante. Cras rutrum magna vel orci vehicula tristique. Donec non velit id elit consectetur pharetra. Cras non aliquam nisi. Fusce aliquet a metus eget vulputate. Phasellus tincidunt arcu non nulla tincidunt ornare. Nam posuere auctor purus ut venenatis. Etiam aliquam lorem id lectus sodales porta. Curabitur turpis nisl, ornare nec dignissim sit amet, pretium vitae nulla. Nam sit amet bibendum nunc. Vestibulum eget enim finibus, maximus tellus id, vestibulum magna. Proin ac condimentum ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus.</div>
         <div>Suspendisse potenti. Donec quis elit ac ligula egestas consectetur. Aliquam convallis odio vel rutrum aliquet. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus egestas quam a tempor laoreet. Sed at tortor eu velit sollicitudin efficitur. Ut tempor elit in velit hendrerit, id ullamcorper lectus lobortis. Nam euismod facilisis pharetra. Vestibulum congue, libero et pellentesque luctus, urna elit auctor ligula, ut euismod felis risus id mi.</div>     
