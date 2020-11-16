@@ -89,6 +89,12 @@ class Content
      */
     private $rank;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ContentType::class, inversedBy="contents")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $contentType;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -271,6 +277,18 @@ class Content
     public function setRank(int $rank): self
     {
         $this->rank = $rank;
+
+        return $this;
+    }
+
+    public function getContentType(): ?ContentType
+    {
+        return $this->contentType;
+    }
+
+    public function setContentType(?ContentType $contentType): self
+    {
+        $this->contentType = $contentType;
 
         return $this;
     }

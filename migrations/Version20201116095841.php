@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201116003500 extends AbstractMigration
+final class Version20201116095841 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -20,7 +20,7 @@ final class Version20201116003500 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE content (id INT AUTO_INCREMENT NOT NULL, owner_id INT NOT NULL, role_id INT NOT NULL, menu_id INT DEFAULT NULL, sub_menu_id INT DEFAULT NULL, sub_sub_menu_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, title VARCHAR(255) DEFAULT NULL, sub_title VARCHAR(255) DEFAULT NULL, url VARCHAR(255) DEFAULT NULL, page LONGBLOB DEFAULT NULL, rank INT NOT NULL, created_at DATETIME NOT NULL, uptaded_at DATETIME DEFAULT NULL, validated_at DATETIME DEFAULT NULL, deleted_At DATETIME DEFAULT NULL, is_Active TINYINT(1) DEFAULT \'0\' NOT NULL, INDEX IDX_FEC530A97E3C61F9 (owner_id), INDEX IDX_FEC530A9D60322AC (role_id), INDEX IDX_FEC530A9CCD7E912 (menu_id), INDEX IDX_FEC530A9B30FB5E6 (sub_menu_id), INDEX IDX_FEC530A956F6C078 (sub_sub_menu_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE content (id INT AUTO_INCREMENT NOT NULL, owner_id INT NOT NULL, role_id INT NOT NULL, menu_id INT DEFAULT NULL, sub_menu_id INT DEFAULT NULL, sub_sub_menu_id INT DEFAULT NULL, content_type_id INT NOT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, title VARCHAR(255) DEFAULT NULL, sub_title VARCHAR(255) DEFAULT NULL, url VARCHAR(255) DEFAULT NULL, page LONGBLOB DEFAULT NULL, rank INT NOT NULL, created_at DATETIME NOT NULL, uptaded_at DATETIME DEFAULT NULL, validated_at DATETIME DEFAULT NULL, deleted_At DATETIME DEFAULT NULL, is_Active TINYINT(1) DEFAULT \'0\' NOT NULL, INDEX IDX_FEC530A97E3C61F9 (owner_id), INDEX IDX_FEC530A9D60322AC (role_id), INDEX IDX_FEC530A9CCD7E912 (menu_id), INDEX IDX_FEC530A9B30FB5E6 (sub_menu_id), INDEX IDX_FEC530A956F6C078 (sub_sub_menu_id), INDEX IDX_FEC530A91A445520 (content_type_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE content_type (id INT AUTO_INCREMENT NOT NULL, owner_id INT NOT NULL, role_id INT NOT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, created_at DATETIME NOT NULL, uptaded_at DATETIME DEFAULT NULL, validated_at DATETIME DEFAULT NULL, deleted_At DATETIME DEFAULT NULL, is_Active TINYINT(1) DEFAULT \'0\' NOT NULL, INDEX IDX_41BCBAEC7E3C61F9 (owner_id), INDEX IDX_41BCBAECD60322AC (role_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE estimate (id INT AUTO_INCREMENT NOT NULL, survey_id INT DEFAULT NULL, client_id INT NOT NULL, description LONGTEXT NOT NULL, created_at DATETIME NOT NULL, uptaded_at DATETIME DEFAULT NULL, validated_at DATETIME DEFAULT NULL, deleted_At DATETIME DEFAULT NULL, is_Active TINYINT(1) DEFAULT \'0\' NOT NULL, INDEX IDX_D2EA4607B3FE509D (survey_id), INDEX IDX_D2EA460719EB6921 (client_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE image (id INT AUTO_INCREMENT NOT NULL, owner_id INT NOT NULL, role_id INT NOT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, url VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, uptaded_at DATETIME DEFAULT NULL, validated_at DATETIME DEFAULT NULL, deleted_At DATETIME DEFAULT NULL, is_Active TINYINT(1) DEFAULT \'0\' NOT NULL, INDEX IDX_C53D045F7E3C61F9 (owner_id), INDEX IDX_C53D045FD60322AC (role_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -39,6 +39,7 @@ final class Version20201116003500 extends AbstractMigration
         $this->addSql('ALTER TABLE content ADD CONSTRAINT FK_FEC530A9CCD7E912 FOREIGN KEY (menu_id) REFERENCES menu (id)');
         $this->addSql('ALTER TABLE content ADD CONSTRAINT FK_FEC530A9B30FB5E6 FOREIGN KEY (sub_menu_id) REFERENCES sub_menu (id)');
         $this->addSql('ALTER TABLE content ADD CONSTRAINT FK_FEC530A956F6C078 FOREIGN KEY (sub_sub_menu_id) REFERENCES sub_sub_menu (id)');
+        $this->addSql('ALTER TABLE content ADD CONSTRAINT FK_FEC530A91A445520 FOREIGN KEY (content_type_id) REFERENCES content_type (id)');
         $this->addSql('ALTER TABLE content_type ADD CONSTRAINT FK_41BCBAEC7E3C61F9 FOREIGN KEY (owner_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE content_type ADD CONSTRAINT FK_41BCBAECD60322AC FOREIGN KEY (role_id) REFERENCES role (id)');
         $this->addSql('ALTER TABLE estimate ADD CONSTRAINT FK_D2EA4607B3FE509D FOREIGN KEY (survey_id) REFERENCES survey (id)');
@@ -71,6 +72,7 @@ final class Version20201116003500 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE image_content DROP FOREIGN KEY FK_6BD5677584A0A3ED');
+        $this->addSql('ALTER TABLE content DROP FOREIGN KEY FK_FEC530A91A445520');
         $this->addSql('ALTER TABLE image_content DROP FOREIGN KEY FK_6BD567753DA5256D');
         $this->addSql('ALTER TABLE content DROP FOREIGN KEY FK_FEC530A9CCD7E912');
         $this->addSql('ALTER TABLE sub_menu DROP FOREIGN KEY FK_5A93A552CCD7E912');

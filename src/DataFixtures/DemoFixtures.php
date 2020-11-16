@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Content;
+use App\Entity\ContentType;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\Menu;
@@ -14,6 +15,7 @@ use App\Repository\MenuRepository;
 use App\Repository\SubMenuRepository;
 use App\Repository\SubSubMenuRepository;
 use App\Repository\ContentRepository;
+use App\Repository\ContentTypeRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -30,7 +32,8 @@ class DemoFixtures extends Fixture
         MenuRepository $menuRepository,
         SubMenuRepository $subMenuRepository,
         SubSubMenuRepository $subSubMenuRepository,
-        ContentRepository $contentRepository)
+        ContentRepository $contentRepository,
+        ContentTypeRepository $contentTypeRepository)
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->userRepository = $userRepository;
@@ -39,6 +42,7 @@ class DemoFixtures extends Fixture
         $this->subMenuRepository = $subMenuRepository;
         $this->subSubMenuRepository = $subSubMenuRepository;
         $this->contentRepository = $contentRepository;
+        $this->contentTypeRepository = $contentTypeRepository;
     }
 
     public function load(ObjectManager $manager)
@@ -174,6 +178,32 @@ class DemoFixtures extends Fixture
 
         $manager->flush();
 
+        $contentType1 = new ContentType();
+        $contentType1->setName("page");
+        $contentType1->setDescription("ContyType page for demo use");
+        $contentType1->setOwner($this->userRepository->findOneByEmail("webmaster@likenfactory.com"));
+        $contentType1->setRole($this->roleRepository->findOneByName("public"));
+        $contentType1->setCreatedAt(new \DateTime('now'));
+        $manager->persist($contentType1);
+
+        $contentType2 = new ContentType();
+        $contentType2->setName("post");
+        $contentType2->setDescription("ContyType page for demo use");
+        $contentType2->setOwner($this->userRepository->findOneByEmail("webmaster@likenfactory.com"));
+        $contentType2->setRole($this->roleRepository->findOneByName("public"));
+        $contentType2->setCreatedAt(new \DateTime('now'));
+        $manager->persist($contentType2);
+
+        $contentType3 = new ContentType();
+        $contentType3->setName("profile");
+        $contentType3->setDescription("ContyType page for demo use");
+        $contentType3->setOwner($this->userRepository->findOneByEmail("webmaster@likenfactory.com"));
+        $contentType3->setRole($this->roleRepository->findOneByName("public"));
+        $contentType3->setCreatedAt(new \DateTime('now'));
+        $manager->persist($contentType3);
+
+        $manager->flush();
+
         $content1 = new Content();
         $content1->setName("Content1");
         $content1->setTitle("Content1");
@@ -188,6 +218,7 @@ class DemoFixtures extends Fixture
         $content1->setOwner($this->userRepository->findOneByEmail("webmaster@likenfactory.com"));
         $content1->setRole($this->roleRepository->findOneByName("public"));
         $content1->setMenu($this->menuRepository->findOneByName("Menu1"));
+        $content1->setContentType($this->contentTypeRepository->findOneByName("page"));
         $content1->setCreatedAt(new \DateTime('now'));
         $manager->persist($content1);
 
@@ -205,6 +236,7 @@ class DemoFixtures extends Fixture
         $content2->setOwner($this->userRepository->findOneByEmail("webmaster@likenfactory.com"));
         $content2->setRole($this->roleRepository->findOneByName("public"));
         $content2->setSubMenu($this->subMenuRepository->findOneByName("SubMenu2"));
+        $content2->setContentType($this->contentTypeRepository->findOneByName("page"));
         $content2->setCreatedAt(new \DateTime('now'));
         $manager->persist($content2);
 
@@ -222,6 +254,7 @@ class DemoFixtures extends Fixture
         $content3->setOwner($this->userRepository->findOneByEmail("webmaster@likenfactory.com"));
         $content3->setRole($this->roleRepository->findOneByName("public"));
         $content3->setSubSubMenu($this->subSubMenuRepository->findOneByName("SubSubMenu1"));
+        $content3->setContentType($this->contentTypeRepository->findOneByName("page"));
         $content3->setCreatedAt(new \DateTime('now'));
         $manager->persist($content3);
 

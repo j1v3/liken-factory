@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Traits\Stampable;
 use App\Repository\ContentTypeRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -45,6 +46,16 @@ class ContentType
      * @ORM\JoinColumn(nullable=false)
      */
     private $Role;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Content::class, mappedBy="contentType")
+     */
+    private $contents;
+
+    public function __construct()
+    {
+        $this->contents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -95,6 +106,36 @@ class ContentType
     public function setRole(?Role $Role): self
     {
         $this->Role = $Role;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Content[]
+     */
+    public function getContents(): Collection
+    {
+        return $this->contents;
+    }
+
+    public function addContent(Content $content): self
+    {
+        if (!$this->contents->contains($content)) {
+            $this->contents[] = $content;
+            $content->setContentType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContent(Content $content): self
+    {
+        if ($this->contents->removeElement($content)) {
+            // set the owning side to null (unless already changed)
+            if ($content->getContentType() === $this) {
+                $content->setContentType(null);
+            }
+        }
 
         return $this;
     }
