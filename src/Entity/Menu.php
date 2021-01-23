@@ -248,14 +248,14 @@ class Menu
         }
 
         
-        if ($this->getSubMenus()) {
-            $subContent = [];
-            foreach ($this->getSubMenus() as $smc) {
-                if ($smc->getContents()) {
-                    $subContent = array_push($subContent, $smc->getContents()->getId());
-                }
-            }
-        }
+        // if ($this->getSubMenus()) {
+        //     $subContent = [];
+        //     foreach ($this->getSubMenus() as $smc) {
+        //         if ($smc->getContents()) {
+        //             $subContent = array_push($subContent, $smc->getContents()->getId());
+        //         }
+        //     }
+        // }
 
         // dump($subContent);die();
 
@@ -295,7 +295,7 @@ class Menu
                                                                     [
                                                                         'name'        => $currentSubMenu->getName(),
                                                                         'description' => $currentSubMenu->getDescription(),
-                                                                        'content'     => $subContent,
+                                                                        // 'content'     => $subContent,
                                                                         'rank'        => $currentSubMenu->getRank(),
                                                                         'role'        => $currentSubMenu->getRole()->getName(),
                                                                         'owner'       => $currentSubMenu->getOwner()->getUserName(),
