@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\SubMenu;
 use App\Repository\MenuRepository;
 use App\Traits\Stampable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -236,13 +237,38 @@ class Menu
 
     public function getNavigation()
     {
+
+        $menuContents = ($this->getContents()) ? ($this->getContents()) : null;
+
+        if ($menuContents) {
+            $content = [];
+            foreach ($menuContents as $mc) {
+                $content = array_push($content, $mc->getId());
+            }
+        }
+
+        
+        if ($this->getSubMenus()) {
+            $subContent = [];
+            foreach ($this->getSubMenus() as $smc) {
+                if ($smc->getContents()) {
+                    $subContent = array_push($subContent, $smc->getContents()->getId());
+                }
+            }
+        }
+
+        // dump($subContent);die();
+
+        // $subMenuContents = ($this->getSubMenus()->getContents()) ? ($this->getSubMenus()->getContents()) : null;
+        // $suSubbMenuContents = ($this->getSubSubMenus()->getContents()) ? ($this->getSubSubMenus()->getContents()) : null;
+
         $arrayNavMenu = [];
             
             $arrayNavMenu = array_merge($arrayNavMenu, [ 'menu' => 
                                                             [
                                                                 'name'        => $this->getName(),
                                                                 'description' => $this->getDescription(),
-                                                                // 'content'     => $this->getContent()->getName(),
+                                                                'content'     => $content,
                                                                 'rank'        => $this->getRank(),
                                                                 'role'        => $this->getRole()->getName(),
                                                                 'owner'       => $this->getOwner()->getUserName(),
@@ -253,6 +279,14 @@ class Menu
  
             if ($this->getSubMenus()) {
 
+                // $subMenuContents = ($this->getSubMenus()->getContents()) ? ($this->getSubMenus()->getContents()) : null;
+                // if ($subMenuContents) {
+                //     $subContent = [];
+                //     foreach ($subMenuContents as $smc) {
+                //         $subContent = array_push($subContent, $smc->getId());
+                //     }
+                // }
+
                 foreach ($this->getSubMenus() as $currentSubMenu) {
             
                     if ($this->getSubSubMenus()) {
@@ -261,7 +295,7 @@ class Menu
                                                                     [
                                                                         'name'        => $currentSubMenu->getName(),
                                                                         'description' => $currentSubMenu->getDescription(),
-                                                                        // 'content'     => $currentSubMenu->getContent()->getName(),
+                                                                        'content'     => $subContent,
                                                                         'rank'        => $currentSubMenu->getRank(),
                                                                         'role'        => $currentSubMenu->getRole()->getName(),
                                                                         'owner'       => $currentSubMenu->getOwner()->getUserName(),
@@ -295,7 +329,7 @@ class Menu
                                                                     [
                                                                         'name'        => $currentSubMenu->getName(),
                                                                         'description' => $currentSubMenu->getDescription(),
-                                                                        // 'content'     => $currentSubMenu->getContent()->getName(),
+                                                                        'content'     => $ccontent,
                                                                         'rank'        => $currentSubMenu->getRank(),
                                                                         'role'        => $currentSubMenu->getRole()->getName(),
                                                                         'owner'       => $currentSubMenu->getOwner()->getUserName(),

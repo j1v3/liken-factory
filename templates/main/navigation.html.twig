@@ -14,7 +14,11 @@
     {% for nav in navigation %}
         {% if nav.menu|default %}
             <ul>
+                {% if nav.menu.content|default %}
+                <li><a href=" {{nav.menu.content}} ">{{nav.menu.name}}</a></li>
+                {% else %}
                 <li>{{nav.menu.name}}</li>
+                {% endif %}
                 {% if nav.subMenu|default %}
                     <ul>
                         <li>{{nav.subMenu.name}}</li>

@@ -159,27 +159,27 @@ class SubMenu
     /**
      * @return Collection|Content[]
      */
-    public function getContent(): Collection
+    public function getContents(): Collection
     {
-        return $this->content;
+        return $this->contents;
     }
 
-    public function addContent(Content $content): self
+    public function addContents(Content $contents): self
     {
-        if (!$this->content->contains($content)) {
-            $this->content[] = $content;
-            $content->setSubMenu($this);
+        if (!$this->contents->contains($contents)) {
+            $this->contents[] = $contents;
+            $contents->setSubMenu($this);
         }
 
         return $this;
     }
 
-    public function removeContent(Content $content): self
+    public function removeContents(Content $contents): self
     {
-        if ($this->content->removeElement($content)) {
+        if ($this->content->removeElement($contents)) {
             // set the owning side to null (unless already changed)
-            if ($content->getSubMenu() === $this) {
-                $content->setSubMenu(null);
+            if ($contents->getSubMenu() === $this) {
+                $contents->setSubMenu(null);
             }
         }
 
