@@ -19,16 +19,29 @@
                 {% else %}
                 <li>{{nav.menu.name}}</li>
                 {% endif %}
-                {% if nav.subMenu|default %}
-                    <ul>
-                        <li>{{nav.subMenu.name}}</li>
-                        {% if nav.subSubMenu|default %}
-                            <ul>
-                                <li>{{nav.subSubMenu.name}}</li>
-                            </ul>
-                        {% endif %}
-                    </ul>
-                {% endif %}
+                    {% if nav.subMenu|default %}
+                        <ul>
+
+                            {% if nav.subMenu.content|default %}
+                            <li><a href=" {{nav.subMenu.content}} ">{{nav.subMenu.name}}</a></li>
+                            {% else %}
+                            <li>{{nav.subMenu.name}}</li>
+                            {% endif %}
+
+                            {% if nav.subSubMenu|default %}
+                                <ul>
+
+                                    {% if nav.subSubMenu.content|default %}
+                                    <li><a href=" {{nav.subSubMenu.content}} ">{{nav.subSubMenu.name}}</a></li>
+                                    {% else %}
+                                    <li>{{nav.subSubMenu.name}}</li>
+                                    {% endif %}
+
+                                </ul>
+                            {% endif %}
+
+                        </ul>
+                    {% endif %}
             </ul>
         {% endif %}
     {% endfor %} 

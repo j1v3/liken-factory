@@ -239,28 +239,35 @@ class Menu
     {
 
         $menuContents = ($this->getContents()) ? ($this->getContents()) : null;
-
+        
         if ($menuContents) {
             $content = [];
+            $subContent = [];
+            $subSubContent = [];
+
             foreach ($menuContents as $mc) {
                 $content = array_push($content, $mc->getId());
-            }
-        }
+            
+                if ($this->getSubMenus()) {
 
-        
-        // if ($this->getSubMenus()) {
-        //     $subContent = [];
-        //     foreach ($this->getSubMenus() as $smc) {
-        //         if ($smc->getContents()) {
-        //             $subContent = array_push($subContent, $smc->getContents()->getId());
-        //         }
-        //     }
-        // }
+                    foreach ($this->getSubMenus() as $smc) {
+                    
+                        if ($smc->getContents()) {
+                            $subContent = array_push($subContent, $smc->getContents()->getId());
 
-        // dump($subContent);die();
+                            if($this->getSubSubMenus()) {
 
-        // $subMenuContents = ($this->getSubMenus()->getContents()) ? ($this->getSubMenus()->getContents()) : null;
-        // $suSubbMenuContents = ($this->getSubSubMenus()->getContents()) ? ($this->getSubSubMenus()->getContents()) : null;
+                                foreach ($this->getSubSubMenus() as $ssmc) {
+                                    $subSubContent = array_push($subSubContent, $ssmc->getContents()->getId());
+                                }
+                            }
+                        }
+                    }
+                }
+            }           
+        }     
+
+        // dump($content, $subContent, $subSubContent);die();
 
         $arrayNavMenu = [];
             
@@ -279,14 +286,6 @@ class Menu
  
             if ($this->getSubMenus()) {
 
-                // $subMenuContents = ($this->getSubMenus()->getContents()) ? ($this->getSubMenus()->getContents()) : null;
-                // if ($subMenuContents) {
-                //     $subContent = [];
-                //     foreach ($subMenuContents as $smc) {
-                //         $subContent = array_push($subContent, $smc->getId());
-                //     }
-                // }
-
                 foreach ($this->getSubMenus() as $currentSubMenu) {
             
                     if ($this->getSubSubMenus()) {
@@ -295,7 +294,7 @@ class Menu
                                                                     [
                                                                         'name'        => $currentSubMenu->getName(),
                                                                         'description' => $currentSubMenu->getDescription(),
-                                                                        // 'content'     => $subContent,
+                                                                        'content'     => $subContent,
                                                                         'rank'        => $currentSubMenu->getRank(),
                                                                         'role'        => $currentSubMenu->getRole()->getName(),
                                                                         'owner'       => $currentSubMenu->getOwner()->getUserName(),
@@ -311,7 +310,7 @@ class Menu
                                                                         [
                                                                             'name'        => $currentSubSubMenu->getName(),
                                                                             'description' => $currentSubSubMenu->getDescription(),
-                                                                            // 'content'     => $currentSubSubMenu->getContent()->getName(),
+                                                                            'content'     => $subSubContent,
                                                                             'rank'        => $currentSubSubMenu->getRank(),
                                                                             'role'        => $currentSubSubMenu->getRole()->getName(),
                                                                             'owner'       => $currentSubSubMenu->getOwner()->getUserName(),
