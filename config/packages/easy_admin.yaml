@@ -1,0 +1,19 @@
+easy_admin:
+   entities:
+#        # List the entity class name you want to manage
+      - App\Entity\User
+      - App\Entity\Content
+      - App\Entity\ContentType
+      - App\Entity\Estimate
+      - App\Entity\Image
+      - App\Entity\Menu
+      - App\Entity\Message
+      - App\Entity\SubMenu
+      - App\Entity\SubSubMenu
+      - App\Entity\Survey
+      - App\Entity\SurveyItem
+      - App\Entity\User
+
+   user:
+      display_name: true
+      display_avatar: true

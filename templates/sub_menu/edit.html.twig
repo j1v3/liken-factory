@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SubMenu{% endblock %}
+
+{% block body %}
+    <h1>Edit SubMenu</h1>
+
+    {{ include('sub_menu/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('sub_menu_index') }}">back to list</a>
+
+    {{ include('sub_menu/_delete_form.html.twig') }}
+{% endblock %}

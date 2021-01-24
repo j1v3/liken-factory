@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SurveyItem index{% endblock %}
+
+{% block body %}
+    <h1>SurveyItem index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for survey_item in survey_items %}
+            <tr>
+                <td>{{ survey_item.id }}</td>
+                <td>{{ survey_item.name }}</td>
+                <td>{{ survey_item.description }}</td>
+                <td>
+                    <a href="{{ path('survey_item_show', {'id': survey_item.id}) }}">show</a>
+                    <a href="{{ path('survey_item_edit', {'id': survey_item.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('survey_item_new') }}">Create new</a>
+{% endblock %}

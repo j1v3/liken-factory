@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SubSubMenu index{% endblock %}
+
+{% block body %}
+    <h1>SubSubMenu index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Rank</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sub_sub_menu in sub_sub_menus %}
+            <tr>
+                <td>{{ sub_sub_menu.id }}</td>
+                <td>{{ sub_sub_menu.name }}</td>
+                <td>{{ sub_sub_menu.description }}</td>
+                <td>{{ sub_sub_menu.rank }}</td>
+                <td>
+                    <a href="{{ path('sub_sub_menu_show', {'id': sub_sub_menu.id}) }}">show</a>
+                    <a href="{{ path('sub_sub_menu_edit', {'id': sub_sub_menu.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('sub_sub_menu_new') }}">Create new</a>
+{% endblock %}

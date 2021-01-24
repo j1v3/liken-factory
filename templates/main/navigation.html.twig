@@ -1,0 +1,50 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+
+    {% for nav in navigation %}
+        {% if nav.menu|default %}
+            <ul>
+                {% if nav.menu.content|default %}
+                <li><a href=" {{nav.menu.content}} ">{{nav.menu.name}}</a></li>
+                {% else %}
+                <li>{{nav.menu.name}}</li>
+                {% endif %}
+                    {% if nav.subMenu|default %}
+                        <ul>
+
+                            {% if nav.subMenu.content|default %}
+                            <li><a href=" {{nav.subMenu.content}} ">{{nav.subMenu.name}}</a></li>
+                            {% else %}
+                            <li>{{nav.subMenu.name}}</li>
+                            {% endif %}
+
+                            {% if nav.subSubMenu|default %}
+                                <ul>
+
+                                    {% if nav.subSubMenu.content|default %}
+                                    <li><a href=" {{nav.subSubMenu.content}} ">{{nav.subSubMenu.name}}</a></li>
+                                    {% else %}
+                                    <li>{{nav.subSubMenu.name}}</li>
+                                    {% endif %}
+
+                                </ul>
+                            {% endif %}
+
+                        </ul>
+                    {% endif %}
+            </ul>
+        {% endif %}
+    {% endfor %} 
+
+</div>
+{% endblock %}
